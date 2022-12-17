@@ -1,5 +1,7 @@
 package com.example.stocktrade.repositories;
 
+import com.example.stocktrade.models.Trade;
+import com.example.stocktrade.models.User;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TradeRepository extends JpaRepository<Trade,Long> {
-    Pageable sortedBySymbolAndDateCreated =
-            PageRequest.of(0, 5, Sort.by("symbol").descending().and(Sort.by("date_created")));
+//    Pageable sortedBySymbolAndDateCreated =
+//            PageRequest.of(0, 5, Sort.by("symbol").descending().and(Sort.by("date_created")));
     Optional<List<Trade>> findByUserOrderByIdAsc(User user);
 
     List<Trade> findAllByOrderByIdAsc();
