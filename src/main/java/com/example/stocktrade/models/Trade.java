@@ -1,2 +1,4 @@
-package com.example.stocktrade.models;public class Trade {
+package com.example.stocktrade.models;
+
+public class Trade {
 }
