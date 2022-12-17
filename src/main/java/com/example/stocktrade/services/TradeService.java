@@ -1,2 +1,4 @@
-package com.example.stocktrade.services;public interface TradeService {
+package com.example.stocktrade.services;
+
+public class TradeService {
 }
