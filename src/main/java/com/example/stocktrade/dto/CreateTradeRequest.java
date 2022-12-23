@@ -1,11 +1,9 @@
 package com.example.stocktrade.dto;
 
 import com.example.stocktrade.models.User;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotEmpty;
 
-public record Trade (
-        Long id,
+public record CreateTradeRequest(
+        long id,
         String type,
         User user,
         String symbol,

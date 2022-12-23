@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -27,19 +29,21 @@ public class Trade {
 
     @Column(name = "date_created",updatable = false,nullable = false,columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     @Temporal(value = TemporalType.TIMESTAMP)
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd hh:mm:ss")
-    private Date dateCreated;
+
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
+    private LocalDate dateCreated;
 
 
-    @Column(name = "date_updated",columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "date_updated",columnDefinition = "DATETIME ON UPDATE CURRENT_TIMESTAMP")
     @Temporal(value = TemporalType.TIMESTAMP)
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd hh:mm:ss")
     private Date dateUpdated;
 
+    @PrePersist
     void dateCreatedAt() {
         this.dateCreated = new Date();
     }
-    @PrePersist
+    @PreUpdate
     void dateUpdatedAt(){
         this.dateUpdated = new Date();
     }
