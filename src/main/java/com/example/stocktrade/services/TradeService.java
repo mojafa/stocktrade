@@ -9,9 +9,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.text.DateFormat;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,19 +32,11 @@ public class TradeService {
 
     //create
     @Transactional
-    public ResponseEntity<String> createTrade(CreateTradeRequest request) {
+    public ResponseEntity<?> createTrade(CreateTradeRequest request) {
         Trade trade = new Trade();
         //Optional<Trade> tradeFind = tradeRepository.findById(trade.getId());
         if (!(request == null)) {
-            userRepository.save(request.user());
-            trade.setType(request.type());
-            trade.setUser(request.user());
-            trade.setSymbol(request.symbol());
-            trade.setShares(request.shares());
-            trade.setPrice(request.price());
-            //trade.setTimestamp(Timestamp.valueOf((String)request.getTimestamp()));
-            tradeRepository.save(trade);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return getResponseEntity(request, trade);
 
         } else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -81,20 +76,22 @@ public class TradeService {
 
 
     // @TODO assignment
+
     //findByDateCreated
-    @Transactional
-public  ResponseEntity<List<Trade>> findTradeByDateCreated(String localD, long id) throws ParseException {
-        if (tradeRepository.findById(id).isPresent()) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate_ = formatter.parse(startDate);
-            Date endDate_ = formatter.parse(endDate);
-            System.out.println(localDate);
-//            Date dateCreated = (Date) formatter.parse(date);
-//            System.out.println(dateCreated);
-            tradeRepository.findTradeByDateCreated(localDate);
+    @org.springframework.transaction.annotation.Transactional
+    public ResponseEntity<?> findTradesByDatecreated(String date) throws ParseException{
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateCreated = formatter.parse(date);
+        System.out.println(dateCreated);
+        List<Trade> trades = tradeRepository.findTradeByDateCreated(dateCreated);
+        if(!trades.isEmpty()){
+            return new ResponseEntity<>(trades,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
+
 
     //findByDateUpdated
 
@@ -118,20 +115,25 @@ public  ResponseEntity<List<Trade>> findTradeByDateCreated(String localD, long i
 
     //update
     @Transactional
-    public ResponseEntity<String> updateTrade(CreateTradeRequest request) {
-        Trade trade = new Trade();
-        if (!(request == null)) {
-            userRepository.save(request.user());
-            trade.setType(request.type());
-            trade.setUser(request.user());
-            trade.setSymbol(request.symbol());
-            trade.setShares(request.shares());
-            trade.setPrice(request.price());
-            tradeRepository.save(trade);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<?> updateTrade(CreateTradeRequest request, Long id) {
+        Trade trade =  tradeRepository.findById(id).orElseThrow(()->new NullPointerException("Not Found"));
+        if (tradeRepository.findById(id).isPresent()) {
+            return getResponseEntity(request, trade);
         } else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    private ResponseEntity<?> getResponseEntity(CreateTradeRequest request, Trade trade) {
+        userRepository.save(request.user());
+        trade.setType(request.type());
+        trade.setUser(request.user());
+        trade.setSymbol(request.symbol());
+        trade.setShares(request.shares());
+        trade.setPrice(request.price());
+        tradeRepository.save(trade);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     //delete All
     @Transactional
     public void deleteAll(){

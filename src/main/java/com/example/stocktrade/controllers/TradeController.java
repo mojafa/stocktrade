@@ -1,18 +1,15 @@
 package com.example.stocktrade.controllers;
 
 import com.example.stocktrade.dto.CreateTradeRequest;
-import com.example.stocktrade.dto.GenericResponse;
 import com.example.stocktrade.models.Trade;
 import com.example.stocktrade.repositories.TradeRepository;
 import com.example.stocktrade.services.TradeService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,7 +27,7 @@ public class TradeController {
     }
     //create
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody CreateTradeRequest request){
+    public ResponseEntity<?> create(@RequestBody CreateTradeRequest request){
         return tradeService.createTrade(request);
     }
 
@@ -57,14 +54,33 @@ public class TradeController {
 
     //update
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateTrade(@RequestBody CreateTradeRequest request){
-        return tradeService.updateTrade(request);
+    public ResponseEntity<?> updateTrade(@RequestBody CreateTradeRequest request, @PathVariable(value="id") Long id){
+        return tradeService.updateTrade( request, id);
     }
     //findTradeByDateCreated
-    @GetMapping("/{id}/{date}")
-    public ResponseEntity<List<Trade>> findTradeByDateCreated(@PathVariable(value="id") Long id, @PathVariable(value="date") String date) throws ParseException {
-        return tradeService.findTradeByDateCreated(date, id);
+    @GetMapping(value="/date/{date}")
+    public ResponseEntity<?> findTradesByDate(@PathVariable(value = "date") String date) throws ParseException {
+        return tradeService.findTradesByDatecreated(date);
     }
+
+    //findByDateUpdated
+
+    //findByDateCreatedBetween
+
+
+    //findBySymbol
+
+    //findBySymbolAndType
+
+    //findBySymbolAndTypeAndDateCreated
+
+    //findBySymbolAndTypeAndDateCreatedBetween
+
+    //findBySymbolAndTypeAndDateCreatedBetweenAndDateUpdatedBetween
+
+
+    //findBySymbolAndTypeAndDateCreatedBetweenAndDateUpdatedBetweenAndUser
+
 
     //deleteById
     @DeleteMapping("/{id}")
