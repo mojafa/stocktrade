@@ -24,5 +24,17 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
     List<Trade> findAllByOrderByIdAsc();
 
     List<Trade> findTradeByDateCreated(Date date);
-    List<Trade> findTradesBySymbolAndDateCreatedBetween(String symbol,Date startDate, Date endDate);
+    List<Trade> findTradeByDateUpdated(Date date);
+
+    List<Trade> findTradesByDateCreatedBetween(Date date1, Date date2);
+
+    List<Trade> findTradesBySymbol(String symbol);
+    List<Trade> findTradesBySymbolAndType(String symbol, String type);
+
+
+
+
+
+
+    //List<Trade> findTradesBySymbolAndDateCreatedBetween(String symbol,Date startDate, Date endDate);
 }

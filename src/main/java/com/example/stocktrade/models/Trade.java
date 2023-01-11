@@ -32,7 +32,7 @@ public class Trade {
     private Date dateCreated;
 
     @Column(name = "date_updated", columnDefinition = "DATETIME ON UPDATE CURRENT_TIMESTAMP")
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.DATE)
     private Date dateUpdated;
 
     @PrePersist

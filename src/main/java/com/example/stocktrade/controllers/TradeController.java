@@ -58,28 +58,40 @@ public class TradeController {
         return tradeService.updateTrade( request, id);
     }
     //findTradeByDateCreated
-    @GetMapping(value="/date/{date}")
+    @GetMapping(value="/dateCreated/{date}")
     public ResponseEntity<?> findTradesByDate(@PathVariable(value = "date") String date) throws ParseException {
         return tradeService.findTradesByDatecreated(date);
     }
 
     //findByDateUpdated
+    @GetMapping(value="/dateUpdated/{date}")
+    public ResponseEntity<?> findTradesByDateUpdated(@PathVariable(value = "date") String date) throws ParseException {
+        return tradeService.findTradesByDateUpdated(date);
+    }
 
     //findByDateCreatedBetween
+    @GetMapping(value="/dateCreatedBetween/{date1}/{date2}")
+    public ResponseEntity<?> findTradesByDateCreatedBetween(@PathVariable(value = "date1") String dateCreated1, @PathVariable(value = "date2") String dateCreated2) throws ParseException {
+        return tradeService.findTradesByDateCreatedBetween(dateCreated1, dateCreated2);
+    }
 
 
     //findBySymbol
+@GetMapping(value="/symbol/{symbol}")
+public ResponseEntity<?> findTradesBySymbol(@PathVariable(value = "symbol") String symbol){
+        return tradeService.findTradesBySymbol(symbol);
+    }
+
+
+
 
     //findBySymbolAndType
-
-    //findBySymbolAndTypeAndDateCreated
-
-    //findBySymbolAndTypeAndDateCreatedBetween
-
-    //findBySymbolAndTypeAndDateCreatedBetweenAndDateUpdatedBetween
+    @GetMapping(value="/symbol/{symbol}/type/{type}")
+    public ResponseEntity<?> findTradesBySymbolAndType(@PathVariable(value = "symbol") String symbol, @PathVariable(value = "type") String type){
+        return tradeService.findTradesBySymbolAndType(symbol, type);
+    }
 
 
-    //findBySymbolAndTypeAndDateCreatedBetweenAndDateUpdatedBetweenAndUser
 
 
     //deleteById

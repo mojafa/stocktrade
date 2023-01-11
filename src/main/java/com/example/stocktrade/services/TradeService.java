@@ -94,24 +94,63 @@ public class TradeService {
 
 
     //findByDateUpdated
+    @Transactional
+    public ResponseEntity<?> findTradesByDateUpdated(String date) throws ParseException{
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateUpdated = formatter.parse(date);
+        System.out.println(dateUpdated);
+        List<Trade> trades = tradeRepository.findTradeByDateUpdated(dateUpdated);
+        if(!trades.isEmpty()){
+            return new ResponseEntity<>(trades,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
 
     //findByDateCreatedBetween
+    @Transactional
+    public ResponseEntity<?> findTradesByDateCreatedBetween(String date1, String date2) throws ParseException{
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateCreated1 = formatter.parse(date1);
+        Date dateCreated2 = formatter.parse(date2);
+        System.out.println(dateCreated1);
+        System.out.println(dateCreated2);
+        List<Trade> trades = tradeRepository.findTradesByDateCreatedBetween(dateCreated1,dateCreated2);
+        if(!trades.isEmpty()){
+            return new ResponseEntity<>(trades,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
 
 
     //findBySymbol
+    @Transactional
+    public ResponseEntity<?> findTradesBySymbol(String symbol){
+        List<Trade> trades = tradeRepository.findTradesBySymbol(symbol);
+        if(!trades.isEmpty()){
+            return new ResponseEntity<>(trades,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
 
     //findBySymbolAndType
+    @Transactional
+    public ResponseEntity<?> findTradesBySymbolAndType(String symbol, String type){
+        List<Trade> trades = tradeRepository.findTradesBySymbolAndType(symbol,type);
+        if(!trades.isEmpty()){
+            return new ResponseEntity<>(trades,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-    //findBySymbolAndTypeAndDateCreated
-
-    //findBySymbolAndTypeAndDateCreatedBetween
-
-    //findBySymbolAndTypeAndDateCreatedBetweenAndDateUpdatedBetween
-
-
-    //findBySymbolAndTypeAndDateCreatedBetweenAndDateUpdatedBetweenAndUser
-
-
+    }
 
     //update
     @Transactional
