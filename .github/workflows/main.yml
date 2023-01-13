@@ -21,7 +21,7 @@ jobs:
       - name: Deploy in EC2
         env:
           PRIVATE_KEY: ${{ secrets.AWS_KEY  }}
-          HOSTNAME : ${{ secrets.HOSTNAME  }}
+          HOSTNAME : ${{ secrets.HOST_NAME  }}
 
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
