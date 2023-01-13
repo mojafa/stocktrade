@@ -25,8 +25,8 @@ jobs:
           HOSTNAME : ${{ secrets.HOST_NAME  }}
 
         run:
-          echo "$PRIVATE_KEY" > ${PRIVATE_KEY} && chmod 600 ${PRIVATE_KEY}
-          ssh -o StrictHostKeyChecking=no ${PRIVATE_KEY} ${HOSTNAME}
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${HOSTNAME}
           cd /home/ubuntu/stocktrade &&
           git checkout main &&
           git fetch --all &&
