@@ -18,10 +18,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v4.5
+        with:
+          maven-version: 3.8.7
       - name: Deploy in EC2
         env:
           PRIVATE_KEY: ${{ secrets.AWS_KEY  }}
           HOSTNAME : ${{ secrets.HOST_NAME  }}
+
 
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
