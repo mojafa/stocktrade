@@ -1,9 +1,8 @@
-name: StockTrade Deployment
+name: stocktrade
 
 on:
   push:
-    branches: [ "main" ]
-
+    branches: [ master ]
 
 jobs:
   #First we will see the application build or not , then we will deploy in EC2
@@ -22,16 +21,17 @@ jobs:
       - name: Deploy in EC2
         env:
           PRIVATE_KEY: ${{ secrets.AWS_KEY  }}
-          HOSTNAME : ${{ secrets.HOST_NAME  }}
+          HOSTNAME : ${{ secrets.HOSTNAME  }}
 
-        run:
-#          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-#          ssh -o StrictHostKeyChecking=no -i private_key ${HOSTNAME}
-          ssh -o StrictHostKeyChecking=no -i  ${PRIVATE_KEY} ${HOSTNAME}
-          cd /home/ubuntu/stocktrade &&
-          git checkout main &&
-          git fetch --all &&
-          git reset --hard origin/main &&
-          git pull origin main &&
-          mvn clean compile package
-
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${HOSTNAME} '
+          
+            #Now we have got the access of EC2 and we will start the deploy .
+            cd /home/ubuntu/stocktrade &&
+            git checkout master &&
+            git fetch --all &&
+            git reset --hard origin/master &&
+            git pull origin master &&
+            mvn clean compile package 
+          '
