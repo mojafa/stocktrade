@@ -25,14 +25,14 @@ public class TradeController {
         this.tradeService = tradeService;
         this.tradeRepository = tradeRepository;
     }
-    //create
+    //createTrades
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CreateTradeRequest request){
         return tradeService.createTrade(request);
     }
 
 
-    //findAll
+    //findAllTrades
     @GetMapping
     public ResponseEntity<List<Trade>> findAllTrades(){
         return tradeService.findAllTrades();
@@ -52,7 +52,7 @@ public class TradeController {
         return tradeService.findTradesByUserId(userId);
     }
 
-    //update
+    //updateTrades
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTrade(@RequestBody CreateTradeRequest request, @PathVariable(value="id") Long id){
         return tradeService.updateTrade( request, id);
