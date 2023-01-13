@@ -27,7 +27,7 @@ jobs:
         run:
 #          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
 #          ssh -o StrictHostKeyChecking=no -i private_key ${HOSTNAME}
-          ssh -i ${PRIVATE_KEY} ${HOSTNAME}
+          ssh -i StrictHostKeyChecking=no ${PRIVATE_KEY} ${HOSTNAME}
           cd /home/ubuntu/stocktrade &&
           git checkout main &&
           git fetch --all &&
