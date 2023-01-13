@@ -1,17 +1,24 @@
-name: Java CI with Maven
+name: StockTrade Deployment
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+
 
 jobs:
+  #First we will see the application build or not , then we will deploy in EC2
   build:
-
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v2
+
+  Deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
       - name: Deploy in EC2
         env:
             PRIVATE_KEY: ${{ secrets.AWS_KEY  }}
