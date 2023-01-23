@@ -10,18 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
   Deploy:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Maven
-        uses: stCarolas/setup-maven@v4.5
-        with:
-          maven-version: 3.8.6
+      - uses: actions/checkout@v3
       - name: Deploy in EC2
         env:
           PRIVATE_KEY: ${{ secrets.AWS_KEY  }}
@@ -33,10 +29,14 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${HOSTNAME} '
           
             #Now we have got the access of EC2 and we will start the deploy .
-            cd /home/ubuntu/stocktrade &&
-            git checkout main &&
-            git fetch --all &&
-            git reset --hard origin/main &&
-            git pull origin main &&
-            mvn clean compile package 
+             sudo systemctl stop stocktrade.service
+            fuser -k 8080/tcp
+            rm -rf /home/ubuntu/stocktrade
+            git clone your_repo
+            cd /home/ubuntu/stocktrade 
+            git checkout main
+            git pull origin main 
+            mkdir -p /home/ubuntu/logs 
+            sudo chmod +x ./deploy.sh
+            ./deploy.sh
           '

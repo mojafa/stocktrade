@@ -1,0 +1,13 @@
+[Unit]
+Description=Stocktrade App
+After=syslog.target
+
+[Service]
+User=stocktrade
+ExecStart=java -jar /home/ubuntu/stocktrade/target/stocktrade-0.1.jar
+SuccessExitStatus=143
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
