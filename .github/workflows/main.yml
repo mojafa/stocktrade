@@ -32,7 +32,7 @@ jobs:
              sudo systemctl stop stocktrade.service
             fuser -k 8080/tcp
             rm -rf /home/ubuntu/stocktrade
-            git clone your_repo
+            git clone git@github.com:mojafa/stocktrade.git
             cd /home/ubuntu/stocktrade 
             git checkout main
             git pull origin main 
