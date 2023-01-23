@@ -35,7 +35,7 @@ sudo systemctl restart nginx
 # run in detached mode
 #sudo docker run -p 8080:8080 -d stocktrade:latest
 
-/opt/apache-maven-3.8.7/bin/mvn clean compile package
+/home/ubuntu/.sdkman/candidates/maven/current/bin/mvn clean compile package
 sudo deluser stocktrade
 sudo useradd stocktrade
 sudo chown stocktrade:stocktrade /home/ubuntu/stocktrade/target/stocktrade-0.1.jar
